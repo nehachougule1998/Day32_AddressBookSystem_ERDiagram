@@ -1,0 +1,417 @@
+-------------------------------------------------------------Welcome To Address Book System-------------------------------------------------------
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 22
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+------------------------------------------------------UC1----------------------------------------------------------------------------------
+mysql> create database addressbookservice;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------------+
+| Database                 |
++--------------------------+
+| address_books_service    |
+| addressbookservice       |
+| employee_payroll         |
+| employee_payroll_service |
+| employeepayroll_service  |
+| information_schema       |
+| mysql                    |
+| payroll_service          |
+| performance_schema       |
+| sys                      |
++--------------------------+
+9 rows in set (0.00 sec)
+
+mysql>  use addressbookservice;
+Database changed
+-------------------------------------------------------UC2------------------------------------------------------------------
+
+mysql> CREATE TABLE Persons ( PersonID int,    LastName varchar(255),
+    ->         FirstName varchar(255), Address varchar(255), City varchar(255),
+    ->         PhoneNumber BIGINT(13),  email varchar(255), zip int(10));
+Query OK, 0 rows affected, 2 warnings (0.09 sec)
+
+mysql> DESCRIBE Persons;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| PersonID    | int          | YES  |     | NULL    |       |
+| LastName    | varchar(255) | YES  |     | NULL    |       |
+| FirstName   | varchar(255) | YES  |     | NULL    |       |
+| Address     | varchar(255) | YES  |     | NULL    |       |
+| City        | varchar(255) | YES  |     | NULL    |       |
+| PhoneNumber | bigint       | YES  |     | NULL    |       |
+| email       | varchar(255) | YES  |     | NULL    |       |
+| zip         | int          | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+8 rows in set (0.02 sec)
+
+-------------------------------------------------------------------UC3-----------------------------------------------------------------
+
+mysql> INSERT INTO Persons ( PersonID, LastName, FirstName, Address, City,
+    -> PhoneNumber, email, zip) VALUES (1, 'Chougule', 'Neha', 'Burli', 'Nandre',
+    -> 7775827779, 'neha123', 431202),(2, 'Khurana', 'Ayushman', 'Bandra', 'Mumbai',
+    ->  9856244512, 'ayushmankhuran', 410001);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+---------+--------+-------------+----------------+--------+
+| PersonID | LastName | FirstName | Address | City   | PhoneNumber | email          | zip    |
++----------+----------+-----------+---------+--------+-------------+----------------+--------+
+|        1 | Chougule | Neha      | Burli   | Nandre |  7775827779 | neha123        | 431202 |
+|        2 | Khurana  | Ayushman  | Bandra  | Mumbai |  9856244512 | ayushmankhuran | 410001 |
++----------+----------+-----------+---------+--------+-------------+----------------+--------+
+2 rows in set (0.00 sec)
+
+------------------------------------------------------------------UC4----------------------------------------------------------------------
+
+mysql> update Persons set Address = 'Aurangabad' WHERE Address = 'Burli';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  SELECT * FROM Persons;
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+| PersonID | LastName | FirstName | Address    | City   | PhoneNumber | email          | zip    |
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+|        1 | Chougule | Neha      | Aurangabad | Nandre |  7775827779 | neha123        | 431202 |
+|        2 | Khurana  | Ayushman  | Bandra     | Mumbai |  9856244512 | ayushmankhuran | 410001 |
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+2 rows in set (0.00 sec)
+
+----------------------------------------------------------------------UC5-----------------------------------------------------------------
+
+mysql>  DELETE FROM Persons WHERE FirstName = 'Ayushman';
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  SELECT * FROM Persons;
++----------+----------+-----------+------------+--------+-------------+---------+--------+
+| PersonID | LastName | FirstName | Address    | City   | PhoneNumber | email   | zip    |
++----------+----------+-----------+------------+--------+-------------+---------+--------+
+|        1 | Chougule | Neha      | Aurangabad | Nandre |  7775827779 | neha123 | 431202 |
++----------+----------+-----------+------------+--------+-------------+---------+--------+
+1 row in set (0.01 sec)
+
+-------------------------------------------------------------------------UC6---------------------------------------------------------------------
+
+mysql> SELECT * FROM Persons WHERE City = 'Nandre';
++----------+----------+-----------+------------+--------+-------------+---------+--------+
+| PersonID | LastName | FirstName | Address    | City   | PhoneNumber | email   | zip    |
++----------+----------+-----------+------------+--------+-------------+---------+--------+
+|        1 | Chougule | Neha      | Aurangabad | Nandre |  7775827779 | neha123 | 431202 |
++----------+----------+-----------+------------+--------+-------------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Persons ( PersonID, LastName, FirstName, Address, City, PhoneNumber, email, zip)
+    ->  VALUES (1, 'Chougule', 'Neha', 'Burli', 'Nandre',7775827779, 'neha12', 431202),(2, 'Khurana',
+    ->  'Ayushman', 'Bandra', 'Mumbai', 9856244512, 'ayushmankhuran', 410001);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+---------------------------------------------------------------------------UC7---------------------------------------------------------------------
+
+mysql>  SELECT COUNT(City) FROM Persons;
++-------------+
+| COUNT(City) |
++-------------+
+|           3 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql>  INSERT INTO Persons ( PersonID, LastName, FirstName, Address, City, PhoneNumber, email, zip)
+    -> VALUES (1, 'Pawar', 'Vishal', 'Badnapur', 'Jalna',7775827779, 'vishal19', 431202),(2, 'Khurana',
+    ->  'Karan', 'Bandra', 'Mumbai', 9856244512, 'Karankhuran', 410001);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+| PersonID | LastName | FirstName | Address    | City   | PhoneNumber | email          | zip    |
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+|        1 | Chougule | Neha      | Aurangabad | Nandre |  7775827779 | neha123        | 431202 |
+|        1 | Chougule | Neha      | Burli      | Nandre |  7775827779 | neha12         | 431202 |
+|        2 | Khurana  | Ayushman  | Bandra     | Mumbai |  9856244512 | ayushmankhuran | 410001 |
+|        1 | Pawar    | Vishal    | Badnapur   | Jalna  |  7775827779 | vishal19       | 431202 |
+|        2 | Khurana  | Karan     | Bandra     | Mumbai |  9856244512 | Karankhuran    | 410001 |
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update Persons set FirstName = 'Samarth' WHERE LastName = 'Pawar';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+| PersonID | LastName | FirstName | Address    | City   | PhoneNumber | email          | zip    |
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+|        1 | Chougule | Neha      | Aurangabad | Nandre |  7775827779 | neha123        | 431202 |
+|        1 | Chougule | Neha      | Burli      | Nandre |  7775827779 | neha12         | 431202 |
+|        2 | Khurana  | Ayushman  | Bandra     | Mumbai |  9856244512 | ayushmankhuran | 410001 |
+|        1 | Pawar    | Samarth   | Badnapur   | Jalna  |  7775827779 | vishal19       | 431202 |
+|        2 | Khurana  | Karan     | Bandra     | Mumbai |  9856244512 | Karankhuran    | 410001 |
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+5 rows in set (0.01 sec)
+
+-------------------------------------------------------------------------UC8-------------------------------------------------------------
+
+mysql> SELECT * FROM Persons ORDER BY FirstName;
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+| PersonID | LastName | FirstName | Address    | City   | PhoneNumber | email          | zip    |
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+|        2 | Khurana  | Ayushman  | Bandra     | Mumbai |  9856244512 | ayushmankhuran | 410001 |
+|        2 | Khurana  | Karan     | Bandra     | Mumbai |  9856244512 | Karankhuran    | 410001 |
+|        1 | Chougule | Neha      | Aurangabad | Nandre |  7775827779 | neha123        | 431202 |
+|        1 | Chougule | Neha      | Burli      | Nandre |  7775827779 | neha12         | 431202 |
+|        1 | Pawar    | Samarth   | Badnapur   | Jalna  |  7775827779 | vishal19       | 431202 |
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Persons WHERE City = 'Nandre';
++----------+----------+-----------+------------+--------+-------------+---------+--------+
+| PersonID | LastName | FirstName | Address    | City   | PhoneNumber | email   | zip    |
++----------+----------+-----------+------------+--------+-------------+---------+--------+
+|        1 | Chougule | Neha      | Aurangabad | Nandre |  7775827779 | neha123 | 431202 |
+|        1 | Chougule | Neha      | Burli      | Nandre |  7775827779 | neha12  | 431202 |
++----------+----------+-----------+------------+--------+-------------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql>  SELECT * FROM Persons;
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+| PersonID | LastName | FirstName | Address    | City   | PhoneNumber | email          | zip    |
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+|        1 | Chougule | Neha      | Aurangabad | Nandre |  7775827779 | neha123        | 431202 |
+|        1 | Chougule | Neha      | Burli      | Nandre |  7775827779 | neha12         | 431202 |
+|        2 | Khurana  | Ayushman  | Bandra     | Mumbai |  9856244512 | ayushmankhuran | 410001 |
+|        1 | Pawar    | Samarth   | Badnapur   | Jalna  |  7775827779 | vishal19       | 431202 |
+|        2 | Khurana  | Karan     | Bandra     | Mumbai |  9856244512 | Karankhuran    | 410001 |
++----------+----------+-----------+------------+--------+-------------+----------------+--------+
+5 rows in set (0.00 sec)
+
+----------------------------------------------------------------------UC9---------------------------------------------------------------
+
+mysql> ALTER TABLE Persons ADD Type varchar(150) AFTER FirstName;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------+------------+--------+-------------+----------------+--------+
+| PersonID | LastName | FirstName | Type | Address    | City   | PhoneNumber | email          | zip    |
++----------+----------+-----------+------+------------+--------+-------------+----------------+--------+
+|        1 | Chougule | Neha      | NULL | Aurangabad | Nandre |  7775827779 | neha123        | 431202 |
+|        1 | Chougule | Neha      | NULL | Burli      | Nandre |  7775827779 | neha12         | 431202 |
+|        2 | Khurana  | Ayushman  | NULL | Bandra     | Mumbai |  9856244512 | ayushmankhuran | 410001 |
+|        1 | Pawar    | Samarth   | NULL | Badnapur   | Jalna  |  7775827779 | vishal19       | 431202 |
+|        2 | Khurana  | Karan     | NULL | Bandra     | Mumbai |  9856244512 | Karankhuran    | 410001 |
++----------+----------+-----------+------+------------+--------+-------------+----------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update Persons set Type = 'Family' WHERE FirstName = 'Neha';
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update Persons set Type = 'Family' WHERE FirstName = 'Karan';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Persons set Type = 'Friend' WHERE FirstName = 'Samarth';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Persons set Type = 'Profession' WHERE FirstName = 'Ayushman';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  update Persons set Type = 'Friend' WHERE FirstName = 'Nilofar';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------+------------+--------+-------------+----------------+--------+
+| PersonID | LastName | FirstName | Type       | Address    | City   | PhoneNumber | email          | zip    |
++----------+----------+-----------+------------+------------+--------+-------------+----------------+--------+
+|        1 | Chougule | Neha      | Family     | Aurangabad | Nandre |  7775827779 | neha123        | 431202 |
+|        1 | Chougule | Neha      | Family     | Burli      | Nandre |  7775827779 | neha12         | 431202 |
+|        2 | Khurana  | Ayushman  | Profession | Bandra     | Mumbai |  9856244512 | ayushmankhuran | 410001 |
+|        1 | Pawar    | Samarth   | Friend     | Badnapur   | Jalna  |  7775827779 | vishal19       | 431202 |
+|        2 | Khurana  | Karan     | Family     | Bandra     | Mumbai |  9856244512 | Karankhuran    | 410001 |
++----------+----------+-----------+------------+------------+--------+-------------+----------------+--------+
+5 rows in set (0.00 sec)
+
+--------------------------------------------------------------UC10-----------------------------------------------------------------
+
+mysql> SELECT Type, COUNT(FirstName) FROM Persons GROUP BY Type;
++------------+------------------+
+| Type       | COUNT(FirstName) |
++------------+------------------+
+| Family     |                3 |
+| Profession |                1 |
+| Friend     |                1 |
++------------+------------------+
+3 rows in set (0.01 sec)
+
+-------------------------------------------------------------------------UC11------------------------------------------------------------
+
+mysql>  SHOW DATABASES;
++--------------------------+
+| Database                 |
++--------------------------+
+| address_books_service    |
+| addressbookservice       |
+| employee_payroll         |
+| employee_payroll_service |
+| employeepayroll_service  |
+| information_schema       |
+| mysql                    |
+| payroll_service          |
+| performance_schema       |
+| sys                      |
++--------------------------+
+10 rows in set (0.01 sec)
+
+mysql> use addressbookservice;
+Database changed
+mysql> DESCRIBE Persons;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| PersonID    | int          | YES  |     | NULL    |       |
+| LastName    | varchar(255) | YES  |     | NULL    |       |
+| FirstName   | varchar(255) | YES  |     | NULL    |       |
+| Type        | varchar(150) | YES  |     | NULL    |       |
+| Address     | varchar(255) | YES  |     | NULL    |       |
+| City        | varchar(255) | YES  |     | NULL    |       |
+| PhoneNumber | bigint       | YES  |     | NULL    |       |
+| email       | varchar(255) | YES  |     | NULL    |       |
+| zip         | int          | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+9 rows in set (0.01 sec)
+
+---------------------------------------------------------------------UC12------------------------------------------------------------------
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------+------------+--------+-------------+----------------+--------+
+| PersonID | LastName | FirstName | Type       | Address    | City   | PhoneNumber | email          | zip    |
++----------+----------+-----------+------------+------------+--------+-------------+----------------+--------+
+|        1 | Chougule | Neha      | Family     | Aurangabad | Nandre |  7775827779 | neha123        | 431202 |
+|        1 | Chougule | Neha      | Family     | Burli      | Nandre |  7775827779 | neha12         | 431202 |
+|        2 | Khurana  | Ayushman  | Profession | Bandra     | Mumbai |  9856244512 | ayushmankhuran | 410001 |
+|        1 | Pawar    | Samarth   | Friend     | Badnapur   | Jalna  |  7775827779 | vishal19       | 431202 |
+|        2 | Khurana  | Karan     | Family     | Bandra     | Mumbai |  9856244512 | Karankhuran    | 410001 |
++----------+----------+-----------+------------+------------+--------+-------------+----------------+--------+
+5 rows in set (0.00 sec)
+
+--------------------------------------------------------------------UC13---------------------------------------------------------------------
+*****************UC6********************
+
+mysql> SELECT * FROM Persons WHERE City = 'Jalna';
++----------+----------+-----------+--------+----------+-------+-------------+----------+--------+
+| PersonID | LastName | FirstName | Type   | Address  | City  | PhoneNumber | email    | zip    |
++----------+----------+-----------+--------+----------+-------+-------------+----------+--------+
+|        1 | Pawar    | Samarth   | Friend | Badnapur | Jalna |  7775827779 | vishal19 | 431202 |
++----------+----------+-----------+--------+----------+-------+-------------+----------+--------+
+1 row in set (0.00 sec)
+
+*******************UC7*******************
+
+mysql> SELECT COUNT(City) FROM Persons;
++-------------+
+| COUNT(City) |
++-------------+
+|           5 |
++-------------+
+1 row in set (0.00 sec)
+
+****************UC8*********************
+
+mysql> SELECT * FROM Persons ORDER BY FirstName;
++----------+----------+-----------+------------+------------+--------+-------------+----------------+--------+
+| PersonID | LastName | FirstName | Type       | Address    | City   | PhoneNumber | email          | zip    |
++----------+----------+-----------+------------+------------+--------+-------------+----------------+--------+
+|        2 | Khurana  | Ayushman  | Profession | Bandra     | Mumbai |  9856244512 | ayushmankhuran | 410001 |
+|        2 | Khurana  | Karan     | Family     | Bandra     | Mumbai |  9856244512 | Karankhuran    | 410001 |
+|        1 | Chougule | Neha      | Family     | Aurangabad | Nandre |  7775827779 | neha123        | 431202 |
+|        1 | Chougule | Neha      | Family     | Burli      | Nandre |  7775827779 | neha12         | 431202 |
+|        1 | Pawar    | Samarth   | Friend     | Badnapur   | Jalna  |  7775827779 | vishal19       | 431202 |
++----------+----------+-----------+------------+------------+--------+-------------+----------------+--------+
+5 rows in set (0.00 sec)
+
+*******************UC9******************
+
+mysql>  SELECT * FROM Persons WHERE City = 'Nandre';
++----------+----------+-----------+--------+------------+--------+-------------+---------+--------+
+| PersonID | LastName | FirstName | Type   | Address    | City   | PhoneNumber | email   | zip    |
++----------+----------+-----------+--------+------------+--------+-------------+---------+--------+
+|        1 | Chougule | Neha      | Family | Aurangabad | Nandre |  7775827779 | neha123 | 431202 |
+|        1 | Chougule | Neha      | Family | Burli      | Nandre |  7775827779 | neha12  | 431202 |
++----------+----------+-----------+--------+------------+--------+-------------+---------+--------+
+2 rows in set (0.00 sec)
+
+
+mysql> ALTER TABLE Persons ADD Landline INT(150) AFTER PhoneNumber;
+Query OK, 0 rows affected, 1 warning (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> SELECT * FROM Persons;
++----------+----------+-----------+------------+------------+--------+-------------+----------+----------------+--------+
+| PersonID | LastName | FirstName | Type       | Address    | City   | PhoneNumber | Landline | email          | zip    |
++----------+----------+-----------+------------+------------+--------+-------------+----------+----------------+--------+
+|        1 | Chougule | Neha      | Family     | Aurangabad | Nandre |  7775827779 |     NULL | neha123        | 431202 |
+|        1 | Chougule | Neha      | Family     | Burli      | Nandre |  7775827779 |     NULL | neha12         | 431202 |
+|        2 | Khurana  | Ayushman  | Profession | Bandra     | Mumbai |  9856244512 |     NULL | ayushmankhuran | 410001 |
+|        1 | Pawar    | Samarth   | Friend     | Badnapur   | Jalna  |  7775827779 |     NULL | vishal19       | 431202 |
+|        2 | Khurana  | Karan     | Family     | Bandra     | Mumbai |  9856244512 |     NULL | Karankhuran    | 410001 |
++----------+----------+-----------+------------+------------+--------+-------------+----------+----------------+--------+
+5 rows in set (0.00 sec)
+
+*****************UC10******************
+
+mysql>  SELECT Type, COUNT(FirstName) FROM Persons GROUP BY Type;
++------------+------------------+
+| Type       | COUNT(FirstName) |
++------------+------------------+
+| Family     |                3 |
+| Profession |                1 |
+| Friend     |                1 |
++------------+------------------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
